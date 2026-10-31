@@ -38,6 +38,7 @@
 
 .read-books,
 .not-read-books {
+  display: flex;
   height: 90%;
-  background-color: black;
+  gap: 10px;
 }

@@ -5,6 +5,14 @@ const notReadBooks = document.querySelector(".not-read-books");
 
 console.log(readBooks, notReadBooks);
 
+function generateRandomRGB() {
+  const red = Math.floor(Math.random() * 256);
+  const green = Math.floor(Math.random() * 256);
+  const blue = Math.floor(Math.random() * 256);
+
+  return `rgb(${red}, ${green}, ${blue})`;
+}
+
 function addBook(title, author, numberOfPages, wasRead) {
   let book = new Book(title, author, numberOfPages, wasRead);
   myLibrary.push(book);
@@ -25,6 +33,7 @@ function Book(title, author, numberOfPages, wasRead) {
   this.author = author;
   this.numberOfPages = numberOfPages;
   this.wasRead = wasRead;
+  this.color = generateRandomRGB();
 }
 
 Book.prototype.toggleRead = function () {
@@ -37,13 +46,15 @@ Book.prototype.info = function () {
   }`;
 };
 
-function createBookDisplay(book) {
+function displayBook(book, shelf) {
   const newBook = document.createElement("div");
-  newBook.style.width = `${Math.round(book.numberOfPages / 5)}px`;
+  newBook.style.width = `${Math.round(book.numberOfPages / 2)}px`;
   newBook.style.height = "100%";
-  newBook.style.backgroundColor = "red";
+  newBook.style.backgroundColor = `${generateRandomRGB()}`;
   newBook.style.border = "5px solid gold";
-  readBooks.appendChild(newBook);
+  newBook.style.minWidth = "30px";
+  newBook.style.maxWidth = "200px";
+  shelf.appendChild(newBook);
 }
 
 addBook("The Hobbit", "J R R", 295, true);
@@ -56,6 +67,8 @@ console.log(myLibrary[0].info());
 
 removeBook(0);
 
-let book1 = new Book("The Hobbit", "J R R", 295, true);
+let book1 = new Book("The Hobbit", "J R R", 400, true);
+let book2 = new Book("The Hobbit 2", "J R R", 80, true);
 
-createBookDisplay(book1);
+displayBook(book1, readBooks);
+displayBook(book2, notReadBooks);
