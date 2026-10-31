@@ -86,4 +86,5 @@ addBookForm.addEventListener("submit", (event) => {
   let numberOfPages = addBookPages.valueAsNumber;
   let wasRead = addBookWasRead.checked;
   addBook(title, author, numberOfPages, wasRead);
+  addBookForm.reset();
 });
