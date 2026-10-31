@@ -14,6 +14,10 @@ const addBookPages = document.getElementById("pages");
 
 const addBookWasRead = document.getElementById("read");
 
+const removeBookButton = document.createElement("button");
+
+removeBookButton.classList.add("remove-book-button");
+
 function generateRandomRGB() {
   const red = Math.floor(Math.random() * 256);
   const green = Math.floor(Math.random() * 256);
@@ -73,6 +77,8 @@ function displayBook(book, shelf) {
   newBook.style.width = `${Math.round(book.numberOfPages / 2)}px`;
   newBook.style.backgroundColor = book.color;
   newBook.classList.add("book");
+  console.log(newBook);
+  newBook.appendChild(removeBookButton);
   shelf.appendChild(newBook);
 }
 
@@ -85,4 +91,3 @@ addBookForm.addEventListener("submit", (event) => {
   addBook(title, author, numberOfPages, wasRead);
   addBookForm.reset();
 });
-
