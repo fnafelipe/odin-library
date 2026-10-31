@@ -6,6 +6,11 @@ function addBook(title, author, numberOfPages, wasRead) {
   console.table(myLibrary);
 }
 
+function removeBook(index) {
+  myLibrary.splice(index, 1);
+  console.table(myLibrary);
+}
+
 function Book(title, author, numberOfPages, wasRead) {
   if (!new.target) {
     throw Error("You must use the 'new' operator to call the constructor");
@@ -33,3 +38,5 @@ addBook("The Hobbit 3", "J R R", 312, false);
 console.log(myLibrary[0].info());
 myLibrary[0].toggleRead();
 console.log(myLibrary[0].info());
+
+removeBook(0);
