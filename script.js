@@ -46,6 +46,16 @@ Book.prototype.info = function () {
   }`;
 };
 
+function displayLibrary() {
+  for (let book of myLibrary) {
+    if (book.wasRead) {
+      displayBook(book, readBooks);
+    } else {
+      displayBook(book, notReadBooks);
+    }
+  }
+}
+
 function displayBook(book, shelf) {
   const newBook = document.createElement("div");
   newBook.style.width = `${Math.round(book.numberOfPages / 2)}px`;
@@ -57,18 +67,13 @@ function displayBook(book, shelf) {
   shelf.appendChild(newBook);
 }
 
-addBook("The Hobbit", "J R R", 295, true);
-addBook("The Hobbit 2", "J R R", 287, true);
-addBook("The Hobbit 3", "J R R", 312, false);
-
-console.log(myLibrary[0].info());
-myLibrary[0].toggleRead();
-console.log(myLibrary[0].info());
-
-removeBook(0);
-
 let book1 = new Book("The Hobbit", "J R R", 400, true);
 let book2 = new Book("The Hobbit 2", "J R R", 80, true);
 
-displayBook(book1, readBooks);
-displayBook(book2, notReadBooks);
+addBook("Minecraft a lenda", "Tazercraft", 120, true);
+addBook("Minecraft a lenda 2", "Tazercraft", 240, false);
+addBook("Minecraft a lenda 3", "Tazercraft", 80, false);
+addBook("Minecraft a lenda 4", "Tazercraft", 500, true);
+
+addBook("Minecraft a lenda 5", "Tazercraft", 500, true);
+displayLibrary();
