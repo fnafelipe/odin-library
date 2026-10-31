@@ -3,7 +3,7 @@
   padding: 0;
   box-sizing: border-box;
   --better-brown: rgb(84, 42, 11);
-  --dark-brown: rgb(57, 28, 8)
+  --dark-brown: rgb(57, 28, 8);
 }
 
 .container {
@@ -19,9 +19,12 @@
 
 .read-section,
 .not-read-section {
+  display: flex;
+  flex-direction: column;
   background-color: var(--dark-brown);
   height: 50%;
   padding-top: 10px;
+  gap: 50px;
 }
 
 .read-section h1 {
@@ -31,4 +34,10 @@
 .not-read-section h1 {
   color: red;
   text-align: center;
+}
+
+.read-books,
+.not-read-books {
+  height: 90%;
+  background-color: black;
 }
