@@ -1,9 +1,18 @@
 let myLibrary = [];
 
 const readBooks = document.querySelector(".read-books");
+
 const notReadBooks = document.querySelector(".not-read-books");
 
-console.log(readBooks, notReadBooks);
+const addBookForm = document.getElementById("add-book-form");
+
+const addBookTitle = document.getElementById("title");
+
+const addBookAuthor = document.getElementById("author");
+
+const addBookPages = document.getElementById("pages");
+
+const addBookWasRead = document.getElementById("read");
 
 function generateRandomRGB() {
   const red = Math.floor(Math.random() * 256);
@@ -16,12 +25,13 @@ function generateRandomRGB() {
 function addBook(title, author, numberOfPages, wasRead) {
   let book = new Book(title, author, numberOfPages, wasRead);
   myLibrary.push(book);
+  displayLibrary();
   console.table(myLibrary);
 }
 
 function removeBook(index) {
   myLibrary.splice(index, 1);
-  console.table(myLibrary);
+  displayLibrary();
 }
 
 function Book(title, author, numberOfPages, wasRead) {
@@ -47,6 +57,8 @@ Book.prototype.info = function () {
 };
 
 function displayLibrary() {
+  readBooks.innerHTML = "";
+  notReadBooks.innerHTML = "";
   for (let book of myLibrary) {
     if (book.wasRead) {
       displayBook(book, readBooks);
@@ -60,20 +72,18 @@ function displayBook(book, shelf) {
   const newBook = document.createElement("div");
   newBook.style.width = `${Math.round(book.numberOfPages / 2)}px`;
   newBook.style.height = "100%";
-  newBook.style.backgroundColor = `${generateRandomRGB()}`;
+  newBook.style.backgroundColor = book.color;
   newBook.style.border = "5px solid gold";
   newBook.style.minWidth = "30px";
   newBook.style.maxWidth = "200px";
   shelf.appendChild(newBook);
 }
 
-let book1 = new Book("The Hobbit", "J R R", 400, true);
-let book2 = new Book("The Hobbit 2", "J R R", 80, true);
-
-addBook("Minecraft a lenda", "Tazercraft", 120, true);
-addBook("Minecraft a lenda 2", "Tazercraft", 240, false);
-addBook("Minecraft a lenda 3", "Tazercraft", 80, false);
-addBook("Minecraft a lenda 4", "Tazercraft", 500, true);
-
-addBook("Minecraft a lenda 5", "Tazercraft", 500, true);
-displayLibrary();
+addBookForm.addEventListener("submit", (event) => {
+  event.preventDefault();
+  let title = addBookTitle.value;
+  let author = addBookAuthor.value;
+  let numberOfPages = addBookPages.valueAsNumber;
+  let wasRead = addBookWasRead.checked;
+  addBook(title, author, numberOfPages, wasRead);
+});

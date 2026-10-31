@@ -9,13 +9,28 @@
   </head>
   <body>
     <main class="container">
-      <div class="read-section">
-        <h1>Read</h1>
-        <div class="read-books"></div>
+      <div class="input-section">
+        <form id="add-book-form">
+          <label for="title">Title</label>
+          <input id="title" type="text" required />
+          <label for="author">Author</label>
+          <input id="author" type="text" required />
+          <label for="pages">Pages</label>
+          <input id="pages" type="number" required />
+          <label for="read">Read</label>
+          <input id="read" type="checkbox" />
+          <button type="submit">Add Book</button>
+        </form>
       </div>
-      <div class="not-read-section">
-        <h1>Not Read</h1>
-        <div class="not-read-books"></div>
+      <div class="main-container">
+        <div class="read-section">
+          <h1>Read</h1>
+          <div class="read-books"></div>
+        </div>
+        <div class="not-read-section">
+          <h1>Not Read</h1>
+          <div class="not-read-books"></div>
+        </div>
       </div>
     </main>
   </body>

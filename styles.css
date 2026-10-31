@@ -8,6 +8,10 @@
 
 .container {
   display: flex;
+}
+
+.main-container {
+  display: flex;
   flex-direction: column;
   justify-content: space-between;
   width: 100%;
@@ -15,6 +19,11 @@
   border: 50px solid var(--better-brown);
   background-color: var(--better-brown);
   gap: 50px;
+}
+
+.input-section {
+  width: 300px;
+  padding: 15px;
 }
 
 .read-section,
