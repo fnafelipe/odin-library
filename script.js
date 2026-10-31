@@ -19,7 +19,7 @@ function generateRandomRGB() {
   const green = Math.floor(Math.random() * 256);
   const blue = Math.floor(Math.random() * 256);
 
-  return `rgb(${red}, ${green}, ${blue})`;
+  return `rgb(${red}, ${green}, ${blue}, 0.7)`;
 }
 
 function addBook(title, author, numberOfPages, wasRead) {
@@ -71,11 +71,8 @@ function displayLibrary() {
 function displayBook(book, shelf) {
   const newBook = document.createElement("div");
   newBook.style.width = `${Math.round(book.numberOfPages / 2)}px`;
-  newBook.style.height = "100%";
   newBook.style.backgroundColor = book.color;
-  newBook.style.border = "5px solid gold";
-  newBook.style.minWidth = "30px";
-  newBook.style.maxWidth = "200px";
+  newBook.classList.add("book");
   shelf.appendChild(newBook);
 }
 
@@ -88,3 +85,4 @@ addBookForm.addEventListener("submit", (event) => {
   addBook(title, author, numberOfPages, wasRead);
   addBookForm.reset();
 });
+
