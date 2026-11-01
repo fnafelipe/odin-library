@@ -29,6 +29,12 @@ function addBook(title, author, numberOfPages, wasRead) {
   console.table(myLibrary);
 }
 
+function readBook(book) {
+  book.wasRead = !book.wasRead;
+  displayLibrary();
+  console.table();
+}
+
 function removeBook(idToRemove) {
   let index = myLibrary.findIndex((book) => book.id === idToRemove);
   myLibrary.splice(index, 1);
@@ -76,9 +82,17 @@ function displayBook(book, shelf) {
   newBook.style.backgroundColor = book.color;
   newBook.classList.add("book");
   console.log(newBook);
+  const readBookButton = document.createElement("button");
+  readBookButton.textContent = "Read";
+  readBookButton.classList.add("read-book-button");
+  readBookButton.addEventListener("click", () => {
+    readBook(book);
+  });
+  newBook.appendChild(readBookButton);
   const removeBookButton = document.createElement("button");
+  removeBookButton.textContent = "Remove";
   removeBookButton.classList.add("remove-book-button");
-  removeBookButton.addEventListener("click", (event) => {
+  removeBookButton.addEventListener("click", () => {
     removeBook(book.id);
   });
   newBook.appendChild(removeBookButton);
