@@ -114,3 +114,13 @@
   min-width: 70px;
   max-width: 220px;
 }
+
+.book-info {
+  width: 100%;
+  max-width: 100%;
+  height: calc(100% - 392px);
+  background-color: var(--dark-brown);
+  padding: 25px;
+  color: gold;
+  gap: 15px;
+}

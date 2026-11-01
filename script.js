@@ -4,6 +4,8 @@ const readBooks = document.querySelector(".read-books");
 
 const notReadBooks = document.querySelector(".not-read-books");
 
+const bookInfo = document.querySelector(".book-info");
+
 const addBookForm = document.getElementById("add-book-form");
 
 const addBookTitle = document.getElementById("title");
@@ -33,6 +35,21 @@ function readBook(book) {
   book.toggleRead();
   displayLibrary();
   console.table();
+}
+
+function infoBook(book) {
+  let title = document.createElement("h2");
+  title.textContent = `Title:
+  ${book.title}`;
+  let author = document.createElement("h2");
+  author.textContent = `Author:
+  ${book.author}`;
+  let pages = document.createElement("h2");
+  pages.textContent = `Pages:
+  ${book.numberOfPages}`;
+  bookInfo.appendChild(title);
+  bookInfo.appendChild(author);
+  bookInfo.appendChild(pages);
 }
 
 function removeBook(idToRemove) {
@@ -82,6 +99,12 @@ function displayBook(book, shelf) {
   newBook.style.backgroundColor = book.color;
   newBook.classList.add("book");
   console.log(newBook);
+  newBook.addEventListener("mouseenter", () => {
+    infoBook(book);
+  });
+  newBook.addEventListener("mouseleave", () => {
+    bookInfo.textContent = "";
+  });
   if (!book.wasRead) {
     const readBookButton = document.createElement("button");
     readBookButton.textContent = "Read";
