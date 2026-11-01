@@ -30,7 +30,7 @@ function addBook(title, author, numberOfPages, wasRead) {
 }
 
 function readBook(book) {
-  book.wasRead = !book.wasRead;
+  book.toggleRead();
   displayLibrary();
   console.table();
 }
@@ -82,13 +82,15 @@ function displayBook(book, shelf) {
   newBook.style.backgroundColor = book.color;
   newBook.classList.add("book");
   console.log(newBook);
-  const readBookButton = document.createElement("button");
-  readBookButton.textContent = "Read";
-  readBookButton.classList.add("read-book-button");
-  readBookButton.addEventListener("click", () => {
-    readBook(book);
-  });
-  newBook.appendChild(readBookButton);
+  if (!book.wasRead) {
+    const readBookButton = document.createElement("button");
+    readBookButton.textContent = "Read";
+    readBookButton.classList.add("read-book-button");
+    readBookButton.addEventListener("click", () => {
+      readBook(book);
+    });
+    newBook.appendChild(readBookButton);
+  }
   const removeBookButton = document.createElement("button");
   removeBookButton.textContent = "Remove";
   removeBookButton.classList.add("remove-book-button");
