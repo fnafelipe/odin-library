@@ -14,10 +14,6 @@ const addBookPages = document.getElementById("pages");
 
 const addBookWasRead = document.getElementById("read");
 
-const removeBookButton = document.createElement("button");
-
-removeBookButton.classList.add("remove-book-button");
-
 function generateRandomRGB() {
   const red = Math.floor(Math.random() * 256);
   const green = Math.floor(Math.random() * 256);
@@ -36,6 +32,7 @@ function addBook(title, author, numberOfPages, wasRead) {
 function removeBook(index) {
   myLibrary.splice(index, 1);
   displayLibrary();
+  console.table(myLibrary);
 }
 
 function Book(title, author, numberOfPages, wasRead) {
@@ -78,6 +75,11 @@ function displayBook(book, shelf) {
   newBook.style.backgroundColor = book.color;
   newBook.classList.add("book");
   console.log(newBook);
+  const removeBookButton = document.createElement("button");
+  removeBookButton.classList.add("remove-book-button");
+  removeBookButton.addEventListener("click", (event) => {
+    console.log(event.target.parentElement, book.id);
+  });
   newBook.appendChild(removeBookButton);
   shelf.appendChild(newBook);
 }
