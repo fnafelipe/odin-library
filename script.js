@@ -29,7 +29,8 @@ function addBook(title, author, numberOfPages, wasRead) {
   console.table(myLibrary);
 }
 
-function removeBook(index) {
+function removeBook(idToRemove) {
+  let index = myLibrary.findIndex((book) => book.id === idToRemove);
   myLibrary.splice(index, 1);
   displayLibrary();
   console.table(myLibrary);
@@ -78,7 +79,7 @@ function displayBook(book, shelf) {
   const removeBookButton = document.createElement("button");
   removeBookButton.classList.add("remove-book-button");
   removeBookButton.addEventListener("click", (event) => {
-    console.log(event.target.parentElement, book.id);
+    removeBook(book.id);
   });
   newBook.appendChild(removeBookButton);
   shelf.appendChild(newBook);
