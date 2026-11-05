@@ -36,6 +36,23 @@ class Book {
   }
 }
 
+class Library {
+  #readBooks = [];
+  #notReadBooks = [];
+
+  get readBooks() {
+    return structuredClone(this.#readBooks);
+  }
+
+  get notReadBooks() {
+    return structuredClone(this.#notReadBooks);
+  }
+}
+
+const library1 = new Library();
+console.table(library1);
+
+/*
 const book1 = new Book("Herobrine a lenda", "Tazercraft", 280, true);
 const book2 = new Book("Herobrine a lenda 2", "Tazercraft", 312, false);
 
@@ -45,7 +62,6 @@ book1.read();
 book2.read();
 console.table(book1);
 console.table(book2);
-/*
 
 console.log(book.title);
 
