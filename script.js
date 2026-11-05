@@ -28,12 +28,28 @@ class Book {
   get wasRead() {
     return this.#wasRead;
   }
+
+  read() {
+    if (!this.#wasRead) {
+      this.#wasRead = true;
+    }
+  }
 }
 
-const book = new Book("Herobrine a lenda", "Tazercraft", 280, true);
+const book1 = new Book("Herobrine a lenda", "Tazercraft", 280, true);
+const book2 = new Book("Herobrine a lenda 2", "Tazercraft", 312, false);
 
-console.table(book);
+console.table(book1);
+console.table(book2);
+book1.read();
+book2.read();
+console.table(book1);
+console.table(book2);
+/*
+
 console.log(book.title);
 
 book.title = "Os Incriveis";
 console.table(book)
+
+*/
