@@ -48,15 +48,29 @@ class Library {
       this.#books.push(bookToAdd);
     }
   }
+
+  readBook(bookToRead) {
+    bookToRead.read();
+  }
+
+  removeBook(bookToRemove) {
+    if (this.#books.some((book) => book.title === bookToRemove.title)) {
+      this.#books.splice(this.#books.indexOf(bookToRemove), 1);
+    }
+  }
 }
 
 const library1 = new Library();
 console.table(library1);
 
-const book1 = new Book("Herobrine a lenda", "Tazercraft", 280, true);
+const book1 = new Book("Herobrine a lenda", "Tazercraft", 280, false);
 
 library1.addBook(book1);
 console.table(library1);
+
+library1.removeBook(book1);
+console.table(library1);
+/*
 
 library1.addBook(book1);
 console.table(library1);
@@ -64,7 +78,6 @@ console.table(library1);
 const book2 = new Book("Herobrine a lenda 2", "Tazercraft", 312, false);
 library1.addBook(book2);
 console.table(library1);
-/*
 
 console.table(book1);
 console.table(book2);
