@@ -37,15 +37,10 @@ class Book {
 }
 
 class Library {
-  #readBooks = [];
-  #notReadBooks = [];
+  #books = [];
 
-  get readBooks() {
-    return structuredClone(this.#readBooks);
-  }
-
-  get notReadBooks() {
-    return structuredClone(this.#notReadBooks);
+  get books() {
+    return structuredClone(this.#books);
   }
 }
 
