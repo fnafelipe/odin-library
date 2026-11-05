@@ -42,13 +42,20 @@ class Library {
   get books() {
     return structuredClone(this.#books);
   }
+
+  addBook(book) {
+    this.#books.push(book);
+  }
 }
 
 const library1 = new Library();
 console.table(library1);
 
-/*
 const book1 = new Book("Herobrine a lenda", "Tazercraft", 280, true);
+
+library1.addBook(book1)
+console.table(library1);
+/*
 const book2 = new Book("Herobrine a lenda 2", "Tazercraft", 312, false);
 
 console.table(book1);
