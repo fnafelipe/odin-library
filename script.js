@@ -43,8 +43,10 @@ class Library {
     return structuredClone(this.#books);
   }
 
-  addBook(book) {
-    this.#books.push(book);
+  addBook(bookToAdd) {
+    if (!this.#books.some((book) => book.title === bookToAdd.title)) {
+      this.#books.push(bookToAdd);
+    }
   }
 }
 
@@ -53,10 +55,16 @@ console.table(library1);
 
 const book1 = new Book("Herobrine a lenda", "Tazercraft", 280, true);
 
-library1.addBook(book1)
+library1.addBook(book1);
+console.table(library1);
+
+library1.addBook(book1);
+console.table(library1);
+
+const book2 = new Book("Herobrine a lenda 2", "Tazercraft", 312, false);
+library1.addBook(book2);
 console.table(library1);
 /*
-const book2 = new Book("Herobrine a lenda 2", "Tazercraft", 312, false);
 
 console.table(book1);
 console.table(book2);
