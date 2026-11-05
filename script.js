@@ -1,135 +1,39 @@
-let myLibrary = [];
+class Book {
+  #title;
+  #author;
+  #pages;
+  #wasRead;
 
-const readBooks = document.querySelector(".read-books");
-
-const notReadBooks = document.querySelector(".not-read-books");
-
-const bookInfo = document.querySelector(".book-info");
-
-const addBookForm = document.getElementById("add-book-form");
-
-const addBookTitle = document.getElementById("title");
-
-const addBookAuthor = document.getElementById("author");
-
-const addBookPages = document.getElementById("pages");
-
-const addBookWasRead = document.getElementById("read");
-
-function generateRandomRGB() {
-  const red = Math.floor(Math.random() * 256);
-  const green = Math.floor(Math.random() * 256);
-  const blue = Math.floor(Math.random() * 256);
-
-  return `rgb(${red}, ${green}, ${blue}, 0.7)`;
-}
-
-function addBook(title, author, numberOfPages, wasRead) {
-  let book = new Book(title, author, numberOfPages, wasRead);
-  myLibrary.push(book);
-  displayLibrary();
-  console.table(myLibrary);
-}
-
-function readBook(book) {
-  book.toggleRead();
-  displayLibrary();
-  console.table();
-}
-
-function infoBook(book) {
-  let title = document.createElement("h2");
-  title.textContent = `Title:
-  ${book.title}`;
-  let author = document.createElement("h2");
-  author.textContent = `Author:
-  ${book.author}`;
-  let pages = document.createElement("h2");
-  pages.textContent = `Pages:
-  ${book.numberOfPages}`;
-  bookInfo.appendChild(title);
-  bookInfo.appendChild(author);
-  bookInfo.appendChild(pages);
-}
-
-function removeBook(idToRemove) {
-  let index = myLibrary.findIndex((book) => book.id === idToRemove);
-  myLibrary.splice(index, 1);
-  displayLibrary();
-  console.table(myLibrary);
-}
-
-function Book(title, author, numberOfPages, wasRead) {
-  if (!new.target) {
-    throw Error("You must use the 'new' operator to call the constructor");
+  constructor(title, author, pages, wasRead) {
+    this.#title = title;
+    this.#author = author;
+    this.#pages = pages;
+    this.#wasRead = wasRead;
   }
-  this.id = crypto.randomUUID();
-  this.title = title;
-  this.author = author;
-  this.numberOfPages = numberOfPages;
-  this.wasRead = wasRead;
-  this.color = generateRandomRGB();
-}
 
-Book.prototype.toggleRead = function () {
-  this.wasRead = !this.wasRead;
-};
+  get title() {
+    return (
+      this.#title.charAt(0).toUpperCase() + this.#title.slice(1).toLowerCase()
+    );
+  }
 
-Book.prototype.info = function () {
-  return `${this.title} by ${this.author}, ${this.numberOfPages} pages, ${
-    this.wasRead ? "already read" : "not riden yet"
-  }`;
-};
+  get author() {
+    return this.#author;
+  }
 
-function displayLibrary() {
-  readBooks.innerHTML = "";
-  notReadBooks.innerHTML = "";
-  for (let book of myLibrary) {
-    if (book.wasRead) {
-      displayBook(book, readBooks);
-    } else {
-      displayBook(book, notReadBooks);
-    }
+  get pages() {
+    return this.#pages;
+  }
+
+  get wasRead() {
+    return this.#wasRead;
   }
 }
 
-function displayBook(book, shelf) {
-  const newBook = document.createElement("div");
-  newBook.style.width = `${Math.round(book.numberOfPages / 2)}px`;
-  newBook.style.backgroundColor = book.color;
-  newBook.classList.add("book");
-  console.log(newBook);
-  newBook.addEventListener("mouseenter", () => {
-    infoBook(book);
-  });
-  newBook.addEventListener("mouseleave", () => {
-    bookInfo.textContent = "";
-  });
-  if (!book.wasRead) {
-    const readBookButton = document.createElement("button");
-    readBookButton.textContent = "Read";
-    readBookButton.classList.add("read-book-button");
-    readBookButton.addEventListener("click", () => {
-      readBook(book);
-    });
-    newBook.appendChild(readBookButton);
-  }
-  const removeBookButton = document.createElement("button");
-  removeBookButton.textContent = "Remove";
-  removeBookButton.classList.add("remove-book-button");
-  removeBookButton.addEventListener("click", () => {
-    removeBook(book.id);
-  });
-  newBook.appendChild(removeBookButton);
-  shelf.appendChild(newBook);
-}
+const book = new Book("Herobrine a lenda", "Tazercraft", 280, true);
 
-addBookForm.addEventListener("submit", (event) => {
-  event.preventDefault();
-  let title = addBookTitle.value;
-  let author = addBookAuthor.value;
-  let numberOfPages = addBookPages.valueAsNumber;
-  let wasRead = addBookWasRead.checked;
-  addBook(title, author, numberOfPages, wasRead);
-  addBookForm.reset();
-});
+console.table(book);
+console.log(book.title);
+
+book.title = "Os Incriveis";
+console.table(book)

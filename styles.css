@@ -47,6 +47,10 @@
   gap: 10px;
 }
 
+.sidebar {
+  max-width: 300px;
+}
+
 #add-book-form {
   display: flex;
   flex-direction: column;
@@ -116,6 +120,9 @@
 }
 
 .book-info {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
   width: 100%;
   max-width: 100%;
   height: calc(100% - 392px);
@@ -123,4 +130,5 @@
   padding: 25px;
   color: gold;
   gap: 15px;
+  overflow-wrap: break-word;
 }
