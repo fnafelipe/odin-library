@@ -1,14 +1,24 @@
+function generateRandomRGB() {
+  const red = Math.floor(Math.random() * 256);
+  const green = Math.floor(Math.random() * 256);
+  const blue = Math.floor(Math.random() * 256);
+
+  return `rgb(${red}, ${green}, ${blue}, 0.7)`;
+}
+
 class Book {
   #title;
   #author;
   #pages;
   #wasRead;
+  #color;
 
   constructor(title, author, pages, wasRead) {
     this.#title = title;
     this.#author = author;
     this.#pages = pages;
     this.#wasRead = wasRead;
+    this.#color = generateRandomRGB();
   }
 
   get title() {
@@ -27,6 +37,10 @@ class Book {
 
   get wasRead() {
     return this.#wasRead;
+  }
+
+  get color() {
+    return this.#color;
   }
 
   read() {
@@ -60,8 +74,75 @@ class Library {
   }
 }
 
+class Interface {
+  constructor() {
+    this.inputTitle = document.getElementById("title");
+    this.inputAuthor = document.getElementById("author");
+    this.inputPages = document.getElementById("pages");
+    this.inputRead = document.getElementById("read");
+    this.addForm = document.getElementById("add-book-form");
+    this.readBooks = document.querySelector(".read-books");
+    this.notReadBooks = document.querySelector(".not-read-books");
+    this.setListeners();
+  }
+
+  clearBookDisplay() {
+    this.readBooks.innerHTML = "";
+    this.notReadBooks.innerHTML = "";
+  }
+
+  createBookDisplay(book) {
+    const newBook = document.createElement("div");
+
+    newBook.style.width = `${Math.round(book.pages / 2)}px`;
+    console.log(book.color);
+    newBook.style.backgroundColor = book.color;
+    newBook.classList.add("book");
+    console.log(newBook);
+    return newBook;
+  }
+
+  displayBooks() {
+    let books = controller.getLibrary();
+    console.log(controller.getLibrary());
+    this.clearBookDisplay();
+    
+    for (let book of books) {
+      let bookDisplay = this.createBookDisplay(book);
+      if (book.wasRead) {
+        this.readBooks.appendChild(bookDisplay);
+      } else {
+        console.log(this.notReadBooks);
+        this.notReadBooks.appendChild(bookDisplay);
+      }
+    }
+  }
+
+  displayAddBook(title, author, pages, wasRead) {
+    controller.askAddBook(title, author, pages, wasRead);
+    console.log(controller.getLibrary());
+    this.displayBooks();
+  }
+
+  setListeners() {
+    this.addForm.addEventListener("submit", (event) => {
+      event.preventDefault();
+      let title = this.inputTitle.value;
+      let author = this.inputAuthor.value;
+      let pages = this.inputPages.valueAsNumber;
+      let wasRead = this.inputRead.checked;
+      this.displayAddBook(title, author, pages, wasRead);
+    });
+  }
+}
+
 const controller = (() => {
   const library = new Library();
+  const interface = new Interface();
+
+  const getLibrary = () => {
+    return library.books;
+  };
 
   const askAddBook = (title, author, pages, wasRead) => {
     let bookToAdd = createBook(title, author, pages, wasRead);
@@ -90,7 +171,7 @@ const controller = (() => {
     }
   };
 
-  return { askAddBook, askReadBook, askRemoveBook };
+  return { getLibrary, askAddBook, askReadBook, askRemoveBook };
 })();
 
 /*
