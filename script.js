@@ -91,6 +91,26 @@ class Interface {
     this.notReadBooks.innerHTML = "";
   }
 
+  addReadButton(newBook) {
+    const readBookButton = document.createElement("button");
+    readBookButton.textContent = "Read";
+    readBookButton.classList.add("read-book-button");
+    readBookButton.addEventListener("click", () => {
+      displayReadBook(newBook);
+    });
+    newBook.appendChild(readBookButton);
+  }
+
+  addRemoveButton(newBook) {
+    const removeBookButton = document.createElement("button");
+    removeBookButton.textContent = "Remove";
+    removeBookButton.classList.add("remove-book-button");
+    removeBookButton.addEventListener("click", () => {
+      displayRemoveBook(newBook);
+    });
+    newBook.appendChild(removeBookButton);
+  }
+
   createBookDisplay(book) {
     const newBook = document.createElement("div");
 
@@ -99,6 +119,12 @@ class Interface {
     newBook.style.backgroundColor = book.color;
     newBook.classList.add("book");
     console.log(newBook);
+
+    if (!book.wasRead) {
+      this.addReadButton(newBook);
+    }
+    this.addRemoveButton(newBook);
+
     return newBook;
   }
 
@@ -106,7 +132,7 @@ class Interface {
     let books = controller.getLibrary();
     console.log(controller.getLibrary());
     this.clearBookDisplay();
-    
+
     for (let book of books) {
       let bookDisplay = this.createBookDisplay(book);
       if (book.wasRead) {
