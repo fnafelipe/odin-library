@@ -22,9 +22,7 @@ class Book {
   }
 
   get title() {
-    return (
-      this.#title.charAt(0).toUpperCase() + this.#title.slice(1).toLowerCase()
-    );
+    return this.#title;
   }
 
   get author() {
@@ -83,6 +81,7 @@ class Interface {
     this.addForm = document.getElementById("add-book-form");
     this.readBooks = document.querySelector(".read-books");
     this.notReadBooks = document.querySelector(".not-read-books");
+    this.bookInfo = document.querySelector(".book-info");
     this.setListeners();
   }
 
@@ -95,9 +94,6 @@ class Interface {
     const readBookButton = document.createElement("button");
     readBookButton.textContent = "Read";
     readBookButton.classList.add("read-book-button");
-    readBookButton.addEventListener("click", () => {
-      displayReadBook(newBook);
-    });
     newBook.appendChild(readBookButton);
   }
 
@@ -105,10 +101,27 @@ class Interface {
     const removeBookButton = document.createElement("button");
     removeBookButton.textContent = "Remove";
     removeBookButton.classList.add("remove-book-button");
-    removeBookButton.addEventListener("click", () => {
-      displayRemoveBook(newBook);
-    });
     newBook.appendChild(removeBookButton);
+  }
+
+  addReadBookListeners(newBook) {
+    newBook.addEventListener("click", (event) => {
+      if (event.target.classList.contains("remove-book-button")) {
+        this.displayRemoveBook(event.target.parentElement.dataset.title);
+      }
+    });
+  }
+
+  addNotReadBookListeners(newBook) {
+    newBook.addEventListener("click", (event) => {
+      let book = event.target.parentElement;
+
+      if (event.target.classList.contains("remove-book-button")) {
+        this.displayRemoveBook(book.dataset.title);
+      } else if (event.target.classList.contains("read-book-button")) {
+        this.displayReadBook(book.dataset.title);
+      }
+    });
   }
 
   createBookDisplay(book) {
@@ -118,14 +131,41 @@ class Interface {
     console.log(book.color);
     newBook.style.backgroundColor = book.color;
     newBook.classList.add("book");
+    newBook.dataset.title = book.title;
     console.log(newBook);
 
     if (!book.wasRead) {
       this.addReadButton(newBook);
+      this.addRemoveButton(newBook);
+      this.addNotReadBookListeners(newBook);
+    } else {
+      this.addRemoveButton(newBook);
+      this.addReadBookListeners(newBook);
     }
-    this.addRemoveButton(newBook);
+
+    newBook.addEventListener("mouseenter", () => {
+      this.displayBookInfo(book);
+    });
+    newBook.addEventListener("mouseleave", () => {
+      this.bookInfo.textContent = "";
+    });
 
     return newBook;
+  }
+
+  displayBookInfo(book) {
+    let title = document.createElement("h2");
+    title.textContent = `Title:
+  ${book.title}`;
+    let author = document.createElement("h2");
+    author.textContent = `Author:
+  ${book.author}`;
+    let pages = document.createElement("h2");
+    pages.textContent = `Pages:
+  ${book.pages}`;
+    this.bookInfo.appendChild(title);
+    this.bookInfo.appendChild(author);
+    this.bookInfo.appendChild(pages);
   }
 
   displayBooks() {
@@ -146,7 +186,16 @@ class Interface {
 
   displayAddBook(title, author, pages, wasRead) {
     controller.askAddBook(title, author, pages, wasRead);
-    console.log(controller.getLibrary());
+    this.displayBooks();
+  }
+
+  displayReadBook(title) {
+    controller.askReadBook(title);
+    this.displayBooks();
+  }
+
+  displayRemoveBook(title) {
+    controller.askRemoveBook(title);
     this.displayBooks();
   }
 
@@ -176,7 +225,9 @@ const controller = (() => {
   };
 
   const askReadBook = (title) => {
+    console.log(title);
     bookToRead = searchBook(title);
+    console.log(bookToRead);
     library.readBook(bookToRead);
   };
 
@@ -195,6 +246,7 @@ const controller = (() => {
         return book;
       }
     }
+    return false;
   };
 
   return { getLibrary, askAddBook, askReadBook, askRemoveBook };
