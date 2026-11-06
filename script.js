@@ -106,8 +106,10 @@ class Interface {
 
   addReadBookListeners(newBook) {
     newBook.addEventListener("click", (event) => {
+      let book = event.target.parentElement;
+
       if (event.target.classList.contains("remove-book-button")) {
-        this.displayRemoveBook(event.target.parentElement.dataset.title);
+        this.displayRemoveBook(book.dataset.title);
       }
     });
   }
@@ -147,7 +149,7 @@ class Interface {
       this.displayBookInfo(book);
     });
     newBook.addEventListener("mouseleave", () => {
-      this.bookInfo.textContent = "";
+      this.clearBookInfo();
     });
 
     return newBook;
@@ -168,10 +170,15 @@ class Interface {
     this.bookInfo.appendChild(pages);
   }
 
+  clearBookInfo() {
+    this.bookInfo.textContent = "";
+  }
+
   displayBooks() {
     let books = controller.getLibrary();
     console.log(controller.getLibrary());
     this.clearBookDisplay();
+    this.clearBookInfo();
 
     for (let book of books) {
       let bookDisplay = this.createBookDisplay(book);
