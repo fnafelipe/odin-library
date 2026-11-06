@@ -64,7 +64,7 @@ const controller = (() => {
   const library = new Library();
 
   const askAddBook = (title, author, pages, wasRead) => {
-    let bookToAdd = new Book(title, author, pages, wasRead);
+    let bookToAdd = createBook(title, author, pages, wasRead);
     library.addBook(bookToAdd);
   };
 
@@ -78,6 +78,10 @@ const controller = (() => {
     library.removeBook(bookToRemove);
   };
 
+  const createBook = (title, author, pages, wasRead) => {
+    return new Book(title, author, pages, wasRead);
+  };
+
   const searchBook = (title) => {
     for (let book of library.books) {
       if (book.title === title) {
@@ -86,9 +90,10 @@ const controller = (() => {
     }
   };
 
-  return { library, askAddBook, askReadBook, askRemoveBook };
+  return { askAddBook, askReadBook, askRemoveBook };
 })();
 
+/*
 controller.askAddBook("Herobrine a lenda", "Tazercraft", 280, false);
 console.table(controller.library);
 controller.askReadBook("Herobrine a lenda");
@@ -96,7 +101,6 @@ console.table(controller.library);
 controller.askRemoveBook("Herobrine a lenda");
 console.table(controller.library);
 
-/*
 const library1 = new Library();
 console.table(library1);
 
