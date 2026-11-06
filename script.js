@@ -40,7 +40,7 @@ class Library {
   #books = [];
 
   get books() {
-    return structuredClone(this.#books);
+    return [...this.#books];
   }
 
   addBook(bookToAdd) {
@@ -60,6 +60,43 @@ class Library {
   }
 }
 
+const controller = (() => {
+  const library = new Library();
+
+  const askAddBook = (title, author, pages, wasRead) => {
+    let bookToAdd = new Book(title, author, pages, wasRead);
+    library.addBook(bookToAdd);
+  };
+
+  const askReadBook = (title) => {
+    bookToRead = searchBook(title);
+    library.readBook(bookToRead);
+  };
+
+  const askRemoveBook = (title) => {
+    bookToRemove = searchBook(title);
+    library.removeBook(bookToRemove);
+  };
+
+  const searchBook = (title) => {
+    for (let book of library.books) {
+      if (book.title === title) {
+        return book;
+      }
+    }
+  };
+
+  return { library, askAddBook, askReadBook, askRemoveBook };
+})();
+
+controller.askAddBook("Herobrine a lenda", "Tazercraft", 280, false);
+console.table(controller.library);
+controller.askReadBook("Herobrine a lenda");
+console.table(controller.library);
+controller.askRemoveBook("Herobrine a lenda");
+console.table(controller.library);
+
+/*
 const library1 = new Library();
 console.table(library1);
 
@@ -70,7 +107,6 @@ console.table(library1);
 
 library1.removeBook(book1);
 console.table(library1);
-/*
 
 library1.addBook(book1);
 console.table(library1);
